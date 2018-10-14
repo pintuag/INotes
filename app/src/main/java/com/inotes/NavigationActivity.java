@@ -28,12 +28,12 @@ public class NavigationActivity extends AppCompatActivity {
             finish();
         }
 
-        int usertype=getIntent().getExtras().getInt("usertype");
-        if(usertype==1){
+//        int usertype=getIntent().getExtras().getInt("usertype");
+        /*if(usertype==1){
             textView.setText("Hello Teachers");
         }
         else if(usertype==2){
             textView.setText("Hello Students");
-        }
+        }*/
     }
 }
