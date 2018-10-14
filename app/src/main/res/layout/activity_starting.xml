@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".StartingActivity">
+
+    <RelativeLayout
+        android:id="@+id/empty"
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/teacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text"
+            android:layout_margin="10dp"
+            android:background="@drawable/searchbackborder"
+            android:text="Teacher" />
+
+        <Button
+            android:id="@+id/student"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/teacher"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:text="Student"
+            android:background="@drawable/searchbackborder"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
