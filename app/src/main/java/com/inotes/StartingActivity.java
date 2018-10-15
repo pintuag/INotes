@@ -27,6 +27,7 @@ public class StartingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 i.putExtra("usertype", 1);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -36,6 +37,7 @@ public class StartingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 i.putExtra("usertype", 2);
                 startActivity(i);
+                finish();
             }
         });
 

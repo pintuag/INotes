@@ -146,7 +146,7 @@ public class SignUp extends AppCompatActivity {
                                 }
 
                                 FirebaseDatabase.getInstance().getReference("Users")
-                                        .child(typeuser).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push()
+                                        .child(typeuser).push()
                                         .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
