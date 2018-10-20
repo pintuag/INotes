@@ -25,4 +25,24 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Divider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/white</item>
+    </style>
+    <style name="ChromeStylePopup" parent="android:Widget.TextView">
+        <item name="android:gravity">center</item>
+
+        <item name="android:maxWidth">150dp</item>
+
+        <item name="android:textColor">@color/color_button_dark</item>
+
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <!-- Theme.AppCompat.Light is not a dialog theme -->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/color_button_dark2</item>
+    </style>
 </resources>

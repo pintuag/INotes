@@ -105,6 +105,12 @@ public class SignUp extends AppCompatActivity {
     private void signup() {
 
         try {
+
+            if(!validate())
+            {
+                //onLoginFailed();
+                return ;
+            }
             // validate user input first
             //  signUpbutton.setEnabled(false); // disable signup button
 
@@ -141,8 +147,10 @@ public class SignUp extends AppCompatActivity {
                                 Log.e("USERTYPE", "" + usertype);
                                 if (usertype == 1) {
                                     typeuser = "Teacher";
+                                    manager.setPrefs(SignUp.this,"usertype","1");
                                 } else if (usertype == 2) {
                                     typeuser = "Student";
+                                    manager.setPrefs(SignUp.this,"usertype","2");
                                 }
 
                                 FirebaseDatabase.getInstance().getReference("Users")
@@ -193,6 +201,8 @@ public class SignUp extends AppCompatActivity {
         Toast.makeText(getBaseContext(), "Signup Succeeded", Toast.LENGTH_SHORT).show();
         signUpbutton.setEnabled(true);
     }
+
+
     public boolean validate()
     {
         boolean valid = true;
@@ -212,12 +222,30 @@ public class SignUp extends AppCompatActivity {
             email.setError(null);
         }
 
-        if (pass.isEmpty() || pass.length() < 6) {
-            password.setError("Password too short, enter minimum 6 characters!");
+        if(usertype==1){
+            Log.e("ISSME Aa gyame", id.toLowerCase().contains("vk@jagannatht.com")+"     ll  "+usertype);
+            if(!id.toLowerCase().endsWith("@jagannatht.com")){
+                Log.e("ISSME Aa gyame",""+usertype);
+                Toast.makeText(this, "Enter Valid Email", Toast.LENGTH_SHORT).show();
+                valid=false;
+            }
+        }else if(usertype==2){
+            Log.e("ISSME Aa gyame", id.toLowerCase().contains("vk@jagannaths.com")+"     ll  "+usertype);
+            if(!id.toLowerCase().endsWith("@jagannaths.com")){
+                Log.e("ISSME Aa gyame",""+usertype);
+                Toast.makeText(this, "Enter Valid Email", Toast.LENGTH_SHORT).show();
+                valid=false;
+            }
+        }
+
+
+        if (pass.isEmpty() || pass.length() < 6 || pass.length() > 10) {
+            password.setError("Password should be atleast 6 characters");
             valid = false;
         } else {
             password.setError(null);
         }
+
         if (name.isEmpty()) {
             fullname.setError("Enter Name");
             valid = false;

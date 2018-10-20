@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-5dp"
+        android:indeterminateOnly="true"
+        android:indeterminateTint="@color/colorAccentt"
+        android:max="100"
+        android:progress="45"
+        android:visibility="gone" />
+
+
+    <com.github.barteksc.pdfviewer.PDFView
+        android:layout_below="@+id/progressbar"
+        android:id="@+id/pdfsyllabus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.github.barteksc.pdfviewer.PDFView>
+
+</RelativeLayout>

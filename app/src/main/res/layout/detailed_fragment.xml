@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+
+        <Button
+            android:id="@+id/syllabus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Syllabus"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/textview"
+            android:background="@drawable/searchbackborder"/>
+
+        <Button
+            android:id="@+id/subjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subjects"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/syllabus"
+            android:background="@drawable/searchbackborder"/>
+
+        <Button
+            android:id="@+id/uploadnotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Notes"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/subjects"
+            android:background="@drawable/searchbackborder"/>
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

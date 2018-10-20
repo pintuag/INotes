@@ -34,6 +34,7 @@ public class Login extends GoogleSignin {
     private EditText password;
     TextView signUp;
     SessionManager manager;
+    int usertype;
 
 
 
@@ -49,11 +50,11 @@ public class Login extends GoogleSignin {
 
         password = (EditText) findViewById(R.id.prompt_password);
         signUp=(TextView)findViewById(R.id.signUp);
+        usertype= getIntent().getExtras().getInt("usertype");
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int usertype= getIntent().getExtras().getInt("usertype");
                 Intent i = new Intent(Login.this,SignUp.class);
                 i.putExtra("usertype",usertype);
                 startActivity(i);
@@ -90,36 +91,35 @@ public class Login extends GoogleSignin {
         String id = email.getText().toString();
         String pass = password.getText().toString();
         //authenticate user
-        mAuth.signInWithEmailAndPassword(id , pass)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if(!task.isSuccessful())
-                        {
-                            // there was an error
 
-                            // check network status
-                            if(! Utility.isNetworkAvailable(Login.this))
-                            {
-                                Toast.makeText(Login.this, "Please Check Internet Connection", Toast.LENGTH_SHORT).show();
+
+            mAuth.signInWithEmailAndPassword(id, pass)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                // there was an error
+
+                                // check network status
+                                if (!Utility.isNetworkAvailable(Login.this)) {
+                                    Toast.makeText(Login.this, "Please Check Internet Connection", Toast.LENGTH_SHORT).show();
+                                }
+                                Toast.makeText(Login.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                                loginButton.setEnabled(true);
+                            } else {
+                                progressDialog.dismiss();
+                                manager.setPrefs(Login.this, "Loggedin", true);
+                                startActivity(new Intent(Login.this, NavigationActivity.class));
+                                finish();
                             }
-                            Toast.makeText(Login.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                            loginButton.setEnabled(true);
-                        }
-                        else
-                        {
-                            progressDialog.dismiss();
-                            manager.setPrefs(Login.this,"Loggedin",true);
-                            startActivity(new Intent(Login.this,NavigationActivity.class));
-                            finish();
-                        }
 
-                    }
-                });
+                        }
+                    });
+
     }
     public void onLoginFailed()
     {
@@ -136,9 +136,28 @@ public class Login extends GoogleSignin {
         if (id.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(id).matches()) {
             email.setError("enter a valid email address");
             valid = false;
-        } else {
+        } else  {
             email.setError(null);
         }
+
+        Log.e("Lowercase",""+id.toLowerCase());
+
+        if(usertype==1){
+            Log.e("ISSME Aa gyame", id.toLowerCase().contains("vk@jagannatht.com")+"     ll  "+usertype);
+            if(!id.toLowerCase().endsWith("@jagannatht.com")){
+                Log.e("ISSME Aa gyame",""+usertype);
+                Toast.makeText(this, "Enter Valid Email", Toast.LENGTH_SHORT).show();
+                valid=false;
+            }
+        } else if(usertype==2){
+            Log.e("ISSME Aa gyame", id.toLowerCase().contains("vk@jagannaths.com")+"     ll  "+usertype);
+            if(!id.toLowerCase().endsWith("@jagannaths.com")){
+                Log.e("ISSME Aa gyame",""+usertype);
+                Toast.makeText(this, "Enter Valid Email", Toast.LENGTH_SHORT).show();
+                valid=false;
+            }
+        }
+
         if (pass.isEmpty() || pass.length() < 6 || pass.length() > 10) {
             password.setError("Password should be atleast 6 characters");
             valid = false;
