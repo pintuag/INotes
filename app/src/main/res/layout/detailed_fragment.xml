@@ -40,6 +40,7 @@
             android:text="Upload Notes"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             android:layout_below="@+id/subjects"
             android:background="@drawable/searchbackborder"/>
 

@@ -51,11 +51,31 @@
                         android:textSize="20sp"
                         android:layout_centerHorizontal="true"/>
 
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/course"
+                        android:hint="Course"
+                        android:layout_below="@+id/text"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:background="@color/white"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_email"
+                            android:drawableEnd="@drawable/ic_email"
+                            android:visibility="gone"
+                            android:id="@+id/course_value"/>
+                    </android.support.design.widget.TextInputLayout>
+
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:id="@+id/email_input"
                         android:hint="Email"
-                        android:layout_below="@+id/text"
+                        android:layout_below="@+id/course"
                         android:paddingTop="10dp"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"

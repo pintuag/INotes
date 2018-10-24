@@ -20,18 +20,30 @@ public class NavigationActivity extends AppCompatActivity {
 
     SessionManager manager;
     Button bca,bba;
+    String usertype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation);
         manager= new SessionManager();
+        usertype = manager.getPrefs(NavigationActivity.this,"usertype");
 
         if(!manager.getPrefs(NavigationActivity.this,"Loggedin",false)){
 
             startActivity(new Intent(NavigationActivity.this,StartingActivity.class));
             finish();
         }
+        setContentView(R.layout.activity_navigation);
+
+       if(usertype.equals("2")){
+
+           Fragment fragment = new DetailedFragment();
+           FragmentTransaction fragmentTransaction =getSupportFragmentManager().beginTransaction();
+           fragmentTransaction.addToBackStack(null);
+           fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                   android.R.anim.fade_out);
+           fragmentTransaction.replace(R.id.frame, fragment).commit();
+       }
 
 
 

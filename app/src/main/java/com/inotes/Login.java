@@ -21,7 +21,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.inotes.Models.User;
 import com.inotes.SharedPref.SessionManager;
 import com.inotes.Utility.Utility;
 
@@ -35,6 +42,7 @@ public class Login extends GoogleSignin {
     TextView signUp;
     SessionManager manager;
     int usertype;
+    private DatabaseReference databaseReference;
 
 
 
@@ -51,6 +59,7 @@ public class Login extends GoogleSignin {
         password = (EditText) findViewById(R.id.prompt_password);
         signUp=(TextView)findViewById(R.id.signUp);
         usertype= getIntent().getExtras().getInt("usertype");
+
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +102,7 @@ public class Login extends GoogleSignin {
         //authenticate user
 
 
+        try {
             mAuth.signInWithEmailAndPassword(id, pass)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -112,13 +122,50 @@ public class Login extends GoogleSignin {
                                 loginButton.setEnabled(true);
                             } else {
                                 progressDialog.dismiss();
+                                try {
+                                  //  final FirebaseUser user = mAuth.getInstance().getCurrentUser();
+                                    Log.e("userdetials", "   " + mFirebaseUser.getEmail());
+                                    databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Student");
+                                    databaseReference.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            Log.e("Datasnapchot","   "+dataSnapshot.getValue());
+                                           /* User user = dataSnapshot.child(mFirebaseUser.getUid()).getValue(User.class);
+
+                                            Log.e("usercourse", "" + user.getCourse());*/
+                                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                                        for(DataSnapshot child : children){
+                                            User user = child.getValue(User.class);
+                                            Log.e("usercourse", "" + user.getCourse());
+                                            manager.setPrefs(Login.this,"course",user.getCourse());
+                                        }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                    if (usertype == 1) {
+                                        manager.setPrefs(Login.this, "usertype", "1");
+                                    } else if (usertype == 2) {
+                                        manager.setPrefs(Login.this, "usertype", "2");
+                                    }
                                 manager.setPrefs(Login.this, "Loggedin", true);
-                                startActivity(new Intent(Login.this, NavigationActivity.class));
+                                startActivity(new Intent(Login.this, NavigationActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                 finish();
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
                             }
 
                         }
                     });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
     public void onLoginFailed()

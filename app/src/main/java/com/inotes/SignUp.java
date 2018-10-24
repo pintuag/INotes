@@ -27,7 +27,7 @@ import com.inotes.Utility.Utility;
 
 public class SignUp extends AppCompatActivity {
 
-    private EditText email, fullname;
+    private EditText email, fullname,course;
     private EditText password;
     private AutoCompleteTextView rmobn;
     ImageButton pstatus, pstatush;
@@ -55,9 +55,16 @@ public class SignUp extends AppCompatActivity {
         pstatush = (ImageButton) findViewById(R.id.pstatush);
         signUpbutton= (Button) findViewById(R.id.signUp);
         login=(TextView)findViewById(R.id.login);
+        course=(EditText)findViewById(R.id.course_value);
 
         usertype=getIntent().getExtras().getInt("usertype");
         Log.e("USertype",""+usertype);
+
+        if(usertype==1){
+            course.setVisibility(View.GONE);
+        }else if(usertype==2){
+            course.setVisibility(View.VISIBLE);
+        }
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +132,8 @@ public class SignUp extends AppCompatActivity {
 
             String id = email.getText().toString();
             String pass = password.getText().toString();
-            final String name = fullname.getText().toString();
+            final String coourse=course.getText().toString();
+            final String name = fullname.getText().toString().toLowerCase();
             final String mobile = rmobn.getText().toString();
             Log.e("VALUES",id+"     "+pass+"     "+name+"     "+mobile);
 
@@ -137,12 +145,21 @@ public class SignUp extends AppCompatActivity {
                             Log.e("TASKKKKK!",task.getResult()+"      "+task.getException());
 
                             if (task.isSuccessful()) {
-
-                                User user = new User(
-                                        name,
-                                        ""+usertype,
-                                        mobile
-                                );
+                                User user=null;
+                                if(usertype==1) {
+                                     user= new User(
+                                            name,
+                                            "" + usertype,
+                                            mobile
+                                    );
+                                }else if(usertype==2){
+                                    user= new User(
+                                            name,
+                                            "" + usertype,
+                                            mobile,
+                                            coourse
+                                    );
+                                }
                                 String typeuser = "";
                                 Log.e("USERTYPE", "" + usertype);
                                 if (usertype == 1) {
@@ -153,29 +170,34 @@ public class SignUp extends AppCompatActivity {
                                     manager.setPrefs(SignUp.this,"usertype","2");
                                 }
 
-                                FirebaseDatabase.getInstance().getReference("Users")
-                                        .child(typeuser).push()
-                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                                try {
+                                    FirebaseDatabase.getInstance().getReference("Users")
+                                            .child(typeuser).push()
+                                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
 
-                                        Log.e("TAkkkkk!",task.getResult()+"      "+task.getException());
-                                        Log.e("TASKKK",""+task.toString());
-                                        progressDialog.dismiss();
-                                        if (task.isSuccessful()) {
-
+                                            Log.e("TAkkkkk!", task.getResult() + "      " + task.getException());
+                                            Log.e("TASKKK", "" + task.toString());
                                             progressDialog.dismiss();
-                                            Toast.makeText(SignUp.this, "SignUp Successfully.", Toast.LENGTH_LONG).show();
-                                            manager.setPrefs(SignUp.this, "Loggedin", true);
-                                            startActivity(new Intent(SignUp.this, NavigationActivity.class).putExtra("usertype",1));
-                                            finish();
-                                        } else {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(SignUp.this, "Please Try Again Later.", Toast.LENGTH_LONG).show();
+                                            if (task.isSuccessful()) {
 
+                                                progressDialog.dismiss();
+                                                Toast.makeText(SignUp.this, "SignUp Successfully.", Toast.LENGTH_LONG).show();
+                                                manager.setPrefs(SignUp.this, "Loggedin", true);
+                                                manager.setPrefs(SignUp.this,"course",coourse);
+                                                startActivity(new Intent(SignUp.this, NavigationActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                finish();
+                                            } else {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(SignUp.this, "Please Try Again Later.", Toast.LENGTH_LONG).show();
+
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
 
                             } else {
                                 progressDialog.dismiss();
@@ -208,12 +230,18 @@ public class SignUp extends AppCompatActivity {
         boolean valid = true;
 
 
+        String cr=course.getText().toString();
         String id = email.getText().toString();
         String pass = password.getText().toString();
         String name=fullname.getText().toString();
         String mobile=rmobn.getText().toString();
 
-
+        if (cr.isEmpty()) {
+            course.setError("Enter a valid email address");
+            valid = false;
+        } else {
+            course.setError(null);
+        }
 
         if (id.isEmpty()) {
             email.setError("Enter a valid email address");
