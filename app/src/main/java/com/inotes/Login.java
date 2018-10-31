@@ -1,28 +1,27 @@
 package com.inotes;
 
-import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
+
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +41,7 @@ public class Login extends GoogleSignin {
     TextView signUp;
     SessionManager manager;
     int usertype;
+    ImageButton pstatus, pstatush;
     private DatabaseReference databaseReference;
 
 
@@ -58,6 +58,8 @@ public class Login extends GoogleSignin {
 
         password = (EditText) findViewById(R.id.prompt_password);
         signUp=(TextView)findViewById(R.id.signUp);
+        pstatus = (ImageButton) findViewById(R.id.pstatus);
+        pstatush = (ImageButton) findViewById(R.id.pstatush);
         usertype= getIntent().getExtras().getInt("usertype");
 
 
@@ -67,6 +69,32 @@ public class Login extends GoogleSignin {
                 Intent i = new Intent(Login.this,SignUp.class);
                 i.putExtra("usertype",usertype);
                 startActivity(i);
+            }
+        });
+
+        pstatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
+                password.setSelection(password.getText().length());
+
+
+                pstatush.setVisibility(View.VISIBLE);
+                pstatus.setVisibility(View.GONE);
+
+            }
+
+        });
+        pstatush.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pstatus.setVisibility(View.VISIBLE);
+                pstatush.setVisibility(View.GONE);
+                password.setInputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                password.setSelection(password.getText().length());
             }
         });
 
@@ -123,39 +151,44 @@ public class Login extends GoogleSignin {
                             } else {
                                 progressDialog.dismiss();
                                 try {
-                                  //  final FirebaseUser user = mAuth.getInstance().getCurrentUser();
-                                    Log.e("userdetials", "   " + mFirebaseUser.getEmail());
-                                    databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Student");
-                                    databaseReference.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            Log.e("Datasnapchot","   "+dataSnapshot.getValue());
-                                           /* User user = dataSnapshot.child(mFirebaseUser.getUid()).getValue(User.class);
-
-                                            Log.e("usercourse", "" + user.getCourse());*/
-                                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                                        for(DataSnapshot child : children){
-                                            User user = child.getValue(User.class);
-                                            Log.e("usercourse", "" + user.getCourse());
-                                            manager.setPrefs(Login.this,"course",user.getCourse());
-                                        }
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
                                     if (usertype == 1) {
                                         manager.setPrefs(Login.this, "usertype", "1");
                                     } else if (usertype == 2) {
                                         manager.setPrefs(Login.this, "usertype", "2");
+
+                                        //  final FirebaseUser user = mAuth.getInstance().getCurrentUser();
+                                     //   Log.e("userdetials", "   " + mFirebaseUser.getEmail());
+                                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Student");
+                                        databaseReference.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                Log.e("Datasnapchot", "   " + dataSnapshot.getValue());
+                                           /* User user = dataSnapshot.child(mFirebaseUser.getUid()).getValue(User.class);
+
+                                            Log.e("usercourse", "" + user.getCourse());*/
+                                                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                                                for (DataSnapshot child : children) {
+                                                    User user = child.getValue(User.class);
+                                                    Log.e("usercourse", "" + user.getCourse());
+                                                    manager.setPrefs(Login.this, "course", user.getCourse());
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
                                     }
                                 manager.setPrefs(Login.this, "Loggedin", true);
                                 startActivity(new Intent(Login.this, NavigationActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                finish();
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                        finishAffinity();
+                                    }else{
+                                        finish();
+                                    }
                                 }catch (Exception e){
                                     e.printStackTrace();
                                 }

@@ -2,6 +2,7 @@ package com.inotes;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -187,7 +188,11 @@ public class SignUp extends AppCompatActivity {
                                                 manager.setPrefs(SignUp.this, "Loggedin", true);
                                                 manager.setPrefs(SignUp.this,"course",coourse);
                                                 startActivity(new Intent(SignUp.this, NavigationActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                                finish();
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                                    finishAffinity();
+                                                }else{
+                                                    finish();
+                                                }
                                             } else {
                                                 progressDialog.dismiss();
                                                 Toast.makeText(SignUp.this, "Please Try Again Later.", Toast.LENGTH_LONG).show();
@@ -236,11 +241,13 @@ public class SignUp extends AppCompatActivity {
         String name=fullname.getText().toString();
         String mobile=rmobn.getText().toString();
 
-        if (cr.isEmpty()) {
-            course.setError("Enter a valid email address");
-            valid = false;
-        } else {
-            course.setError(null);
+        if(usertype==2) {
+            if (cr.isEmpty()) {
+                course.setError("Enter a valid course details");
+                valid = false;
+            } else {
+                course.setError(null);
+            }
         }
 
         if (id.isEmpty()) {

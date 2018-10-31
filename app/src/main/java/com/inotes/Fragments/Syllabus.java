@@ -41,7 +41,9 @@ public class Syllabus extends Fragment {
             url="https://firebasestorage.googleapis.com/v0/b/inotes-5cd3d.appspot.com/o/Courses%2FBca%2Fsyllbca191011.pdf?alt=media&token=ca94381f-c2a2-4d21-85e8-bcf4e5349a8b";
         }else if(manager.getPrefs(getActivity(),"course").equals("bba")){
 
-            url="https://firebasestorage.googleapis.com/v0/b/inotes-5cd3d.appspot.com/o/Courses%2FBba%2Fbbagen.pdf?alt=media&token=fdbbbb5c-c2c2-40ef-830a-e8225c2794d3";
+            Log.e("Bba meaagyake","mee");
+            url="https://firebasestorage.googleapis.com/v0/b/inotes-c2295.appspot.com/o/Courses%2FBba%2Fbbagen.pdf?alt=media&token=12778ce9-defa-441d-abb6-67a6bb02c072";
+
         }
 
 
@@ -57,7 +59,7 @@ public class Syllabus extends Fragment {
         //  Globalfunctions.setFragment_index(12);
     }
 
-    class RetrievePDFStream extends AsyncTask<String,Void,InputStream> {
+    public class RetrievePDFStream extends AsyncTask<String,Void,InputStream> {
         @Override
         protected InputStream doInBackground(String... strings) {
             progressBar.setVisibility(View.VISIBLE);
@@ -83,9 +85,13 @@ public class Syllabus extends Fragment {
         @Override
         protected void onPostExecute(InputStream inputStream) {
 
-            if(inputStream!=null) {
-                progressBar.setVisibility(View.GONE);
-                pdfView.fromStream(inputStream).load();
+            try {
+                if (inputStream != null) {
+                    progressBar.setVisibility(View.GONE);
+                    pdfView.fromStream(inputStream).load();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
         }

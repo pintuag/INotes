@@ -9,50 +9,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
 
-   <TextView
-       android:id="@+id/text"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:padding="10dp"
-       android:layout_centerHorizontal="true"
-       android:text="Hello Bouy!"
-       android:textSize="30sp" />
-
-   <TextView
-       android:id="@+id/textview"
-       android:layout_below="@+id/text"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:padding="10dp"
-       android:layout_centerHorizontal="true"
-       android:text="Courses!"
-       android:textSize="30sp" />
-
-   <Button
-       android:id="@+id/bca"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:text="BCA"
-       android:layout_marginHorizontal="10dp"
-       android:layout_marginTop="20dp"
-       android:layout_below="@+id/textview"
-       android:background="@drawable/searchbackborder"/>
-
-   <Button
-       android:id="@+id/bba"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:text="BBA"
-       android:layout_marginHorizontal="10dp"
-       android:layout_marginTop="20dp"
-       android:layout_below="@+id/bca"
-       android:background="@drawable/searchbackborder"/>
-
-
-   </RelativeLayout>
     
 </FrameLayout>

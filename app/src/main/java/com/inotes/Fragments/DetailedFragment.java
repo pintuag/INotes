@@ -58,13 +58,23 @@ public class DetailedFragment extends Fragment {
        subjects.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Snackbar.make(view,"Not Implemented Yet",Snackbar.LENGTH_SHORT).show();
+               Fragment fragment = new NotesListFragment();
+               FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+               fragmentTransaction.addToBackStack(null);
+               fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                       android.R.anim.fade_out);
+               fragmentTransaction.replace(R.id.frame, fragment).commit();
            }
        });
         uploadnotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(view,"Not Implemented Yet",Snackbar.LENGTH_SHORT).show();
+                Fragment fragment = new UploadNotes();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment).commit();
             }
         });
 

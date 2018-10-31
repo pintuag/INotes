@@ -27,7 +27,7 @@
             android:id="@+id/subjects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subjects"
+            android:text="Notes"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/syllabus"

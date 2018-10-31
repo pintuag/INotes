@@ -35,6 +35,7 @@
     <color name="green_200">#A5D6A7</color>
     <color name="grey_900">#212121</color>
     <color name="grey_600">#757575</color>
+    <color name="trans">#27000000</color>
     <color name="grey_500">#efefef</color>
     <color name="transparent">#0000ffff</color>
     <color name="grey_700">#616161</color>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:id="@+id/rv"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/linear"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+
+        <LinearLayout
+            android:id="@+id/lin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <Button
+                    android:id="@+id/camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Camera"
+                    android:paddingHorizontal="5dp"
+                    android:textAllCaps="false"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="15sp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:drawableLeft="@drawable/camera"/>
+
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/grey_600" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gallery"
+                    android:paddingHorizontal="5dp"
+                    android:textAllCaps="false"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="15sp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:drawableLeft="@drawable/gallery" />
+
+                <View
+
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/grey_600" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <Button
+                    android:id="@+id/pdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pdf"
+                    android:maxLines="1"
+                    android:paddingHorizontal="2dp"
+                    android:layout_centerHorizontal="true"
+                    android:textAllCaps="false"
+                    android:textSize="15sp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:drawableLeft="@drawable/pdf" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/lin"
+            android:background="@color/grey_600" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:id="@+id/cardd">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:nestedScrollingEnabled="false"
+                android:clipToPadding="false">
+
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.CardView>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:layout_below="@+id/cardd"
+            android:id="@+id/pdffilename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <Button
+            android:id="@+id/upload"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/btnbackgreen"
+            android:text="Upload"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

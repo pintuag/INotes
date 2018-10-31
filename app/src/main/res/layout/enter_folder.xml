@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/notesname"
+        android:hint="Enter Notes Name"
+        android:padding="20dp"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:drawableRight="@drawable/pencil"
+            android:drawableEnd="@drawable/pencil"
+            android:id="@+id/notes"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btnbackgreen"
+        android:text="Done"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:layout_below="@+id/notesname"/>
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/btnbackred"
+            android:layout_marginRight="10dp"
+            android:text="Cancel"
+            android:layout_toLeftOf="@+id/done"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/notesname"/>
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
