@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.inotes.Fragments.ImageViewFragment;
 import com.inotes.Fragments.UploadNotes;
 import com.inotes.ImageCompressor;
+import com.inotes.Models.NotesName;
 import com.inotes.Models.UploadUri;
 import com.inotes.R;
 
@@ -31,19 +32,15 @@ import java.util.List;
 public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.RecyclerViewHolder> {
 
     Context context;
-    public List<UploadUri> uris;
+    public List<NotesName> notesNames;
     public int check = 0;
-    public Boolean ignoreOnclick = false;
-    public Boolean selectedMode = false;
     FragmentManager fragmentManager;
-    public static List<UploadUri> urls = new ArrayList<>();
 
 
-    public NotesListAdapter(Context context, List<UploadUri> uris, FragmentManager fragmentManager) {
+    public NotesListAdapter(Context context, List<NotesName> notesNames, FragmentManager fragmentManager) {
 
         this.context = context;
-        this.uris = uris;
-        this.urls=uris;
+        this.notesNames=notesNames;
         this.fragmentManager=fragmentManager;
     }
 
@@ -70,7 +67,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Recy
 
     @Override
     public int getItemCount() {
-        return uris.size();
+        return notesNames.size();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {

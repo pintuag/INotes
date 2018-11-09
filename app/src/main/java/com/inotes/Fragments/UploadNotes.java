@@ -212,7 +212,7 @@ public class UploadNotes extends Fragment {
         return view;
     }
 
-    private void uploadFile(String name) {
+    private void uploadFile(final String name) {
 
         try {
             progressDialog = new ProgressDialog(getActivity());
@@ -221,7 +221,7 @@ public class UploadNotes extends Fragment {
             progressDialog.setProgress(0);
             progressDialog.show();
 
-            String course = manager.getPrefs(getActivity(), "course");
+            final String course = manager.getPrefs(getActivity(), "course");
 
             StorageReference storageReference = storage.getReference();
 
@@ -251,7 +251,7 @@ public class UploadNotes extends Fragment {
                                 String url = taskSnapshot.getUploadSessionUri().toString();
 
                                 DatabaseReference reference = database.getReference("Users");
-                                reference.child("Teacher").push().setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                reference.child("Teacher").child(course).child(name).child(filename).push().setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
