@@ -2,10 +2,22 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-5dp"
+        android:indeterminateOnly="true"
+        android:indeterminateTint="@color/colorAccentt"
+        android:max="100"
+        android:progress="45"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/progressbar"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

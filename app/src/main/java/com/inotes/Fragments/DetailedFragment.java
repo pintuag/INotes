@@ -27,6 +27,7 @@ public class DetailedFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.detailed_fragment,container,false);
+      //  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Courses");
 
         manager=new SessionManager();
        syllabus=(Button)view.findViewById(R.id.syllabus);

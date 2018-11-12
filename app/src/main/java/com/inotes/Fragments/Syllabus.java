@@ -1,10 +1,13 @@
 package com.inotes.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.inotes.Globalfunctions;
+import com.inotes.Models.NotesUrl;
 import com.inotes.R;
 import com.inotes.SharedPref.SessionManager;
 
@@ -29,6 +38,8 @@ public class Syllabus extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.syllabus_fragment,container,false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Notes/Syllabus");
+
 
 
         pdfView=(PDFView)view.findViewById(R.id.pdfsyllabus);
@@ -36,22 +47,35 @@ public class Syllabus extends Fragment {
         manager=new SessionManager();
 
         String url  = "";
-        if(manager.getPrefs(getActivity(),"course").equals("bca")){
+        if(Globalfunctions.presViewIndex==3){
 
-            url="https://firebasestorage.googleapis.com/v0/b/inotes-5cd3d.appspot.com/o/Courses%2FBca%2Fsyllbca191011.pdf?alt=media&token=ca94381f-c2a2-4d21-85e8-bcf4e5349a8b";
-        }else if(manager.getPrefs(getActivity(),"course").equals("bba")){
+            Globalfunctions.setPresViewIndex(10);
+            url = getArguments().getString("folder");
+            Log.e("printurl"," g "+url);
 
-            Log.e("Bba meaagyake","mee");
-            url="https://firebasestorage.googleapis.com/v0/b/inotes-c2295.appspot.com/o/Courses%2FBba%2Fbbagen.pdf?alt=media&token=12778ce9-defa-441d-abb6-67a6bb02c072";
+        }else {
+            if (manager.getPrefs(getActivity(), "course").equals("bca")) {
 
+                url = "https://firebasestorage.googleapis.com/v0/b/inotes-5cd3d.appspot.com/o/Courses%2FBca%2Fsyllbca191011.pdf?alt=media&token=ca94381f-c2a2-4d21-85e8-bcf4e5349a8b";
+            } else if (manager.getPrefs(getActivity(), "course").equals("bba")) {
+
+                Log.e("Bba meaagyake", "mee");
+                url = "https://firebasestorage.googleapis.com/v0/b/inotes-c2295.appspot.com/o/Courses%2FBba%2Fbbagen.pdf?alt=media&token=12778ce9-defa-441d-abb6-67a6bb02c072";
+
+            }
         }
 
 
-        new RetrievePDFStream().execute(url);
+        try {
+            new RetrievePDFStream().execute(url);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         return view;
     }
+
 
     @Override
     public void onResume() {

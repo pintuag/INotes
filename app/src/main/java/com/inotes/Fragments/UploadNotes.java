@@ -26,6 +26,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -94,6 +95,7 @@ public class UploadNotes extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.upload_notes,container,false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Upload Notes");
 
         manager=new SessionManager();
         camera = (Button) view.findViewById(R.id.camera);
@@ -190,7 +192,12 @@ public class UploadNotes extends Fragment {
                         if(!notesname.getText().toString().isEmpty()){
 
                             String name = notesname.getText().toString();
-                            uploadFile(name);
+                            if(pdflist.size()!=0){
+                                uploadFile(name+"pdf");
+                            }else{
+                                uploadFile(name);
+                            }
+
                             dialog.dismiss();
 
                         }else{
@@ -223,7 +230,7 @@ public class UploadNotes extends Fragment {
 
             final String course = manager.getPrefs(getActivity(), "course");
 
-            StorageReference storageReference = storage.getReference();
+            final StorageReference storageReference = storage.getReference();
 
             final List<UploadUri> uploadUris = new ArrayList<>();
             if (pdflist.size() > 0) {
@@ -240,46 +247,57 @@ public class UploadNotes extends Fragment {
 
             for (int i = 0; i < uploadUris.size(); i++) {
                 final int pos = i;
-                final String filename = System.currentTimeMillis() + "";
+                final String filename = "File -"+System.currentTimeMillis() + "";
                 Log.e("Iskeandraagyame","lll");
                 storageReference.child(course).child(name).child(filename).putFile(uploadUris.get(i).getSelectedUri())
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Log.e("Iskeandraagyame","success");
-                                // Get a URL to the uploaded content
-                                String url = taskSnapshot.getUploadSessionUri().toString();
-
-                                DatabaseReference reference = database.getReference("Users");
-                                reference.child("Teacher").child(course).child(name).child(filename).push().setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                StorageReference storageReference1 = storageReference.child(course).child(name).child(filename);
+                                storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            progressDialog.dismiss();
-                                            Snackbar.make(rv, "Uploaded Successfully", Snackbar.LENGTH_SHORT).show();
-                                            if(pos==uploadUris.size()-1){
-                                                pdfname.setText("");
-                                                list.clear();
-                                                uploadUris.clear();
-                                                pdflist.clear();
-                                                Fragment fragment = new NotesListFragment();
-                                                FragmentTransaction fragmentTransaction =getActivity().getSupportFragmentManager().beginTransaction();
-                                                fragmentTransaction.addToBackStack(null);
-                                                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                                                        android.R.anim.fade_out);
-                                                fragmentTransaction.replace(R.id.frame, fragment).commit();
+                                    public void onSuccess(Uri uri) {
+                                        progressDialog.dismiss();
+                                        Log.e("urrlllsls"," h "+uri.toString());
+                                      //  String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                                        //   String url = taskSnapshot.getUploadSessionUri().toString();
+                                      //  Log.e("urllll"," j  "+url+"        ");
+
+                                        DatabaseReference reference = database.getReference("Users");
+                                        reference.child("Teacher").child(course).child(name).child(filename).push().setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                progressDialog.dismiss();
+                                                if (task.isSuccessful()) {
+                                                    Snackbar.make(rv, "Uploaded Successfully", Snackbar.LENGTH_SHORT).show();
+                                                    if(pos==uploadUris.size()-1){
+                                                        pdfname.setText("");
+                                                        list.clear();
+                                                        uploadUris.clear();
+                                                        pdflist.clear();
+                                                        Fragment fragment = new NotesListFragment();
+                                                        FragmentTransaction fragmentTransaction =getActivity().getSupportFragmentManager().beginTransaction();
+                                                        fragmentTransaction.addToBackStack(null);
+                                                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                                                                android.R.anim.fade_out);
+                                                        fragmentTransaction.replace(R.id.frame, fragment).commit();
+                                                    }
+
+
+                                                } else {
+                                                    Snackbar.make(rv, "Not Successfully Uploaded", Snackbar.LENGTH_SHORT).show();
+                                                }
                                             }
+                                        });
 
-
-                                        } else {
-                                            Snackbar.make(rv, "Not Successfully Uploaded", Snackbar.LENGTH_SHORT).show();
-                                        }
                                     }
                                 });
+                                Log.e("Iskeandraagyame","success");
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
                         Log.e("Iskeandraagyame","failure");
                         Snackbar.make(rv, "Someting Went Wrong", Snackbar.LENGTH_SHORT).show();
                     }
@@ -572,24 +590,7 @@ public class UploadNotes extends Fragment {
             }
         }
     }
-    public String getRealPathFromURI(Uri contentURI, Activity context) {
-        Log.e("IMAGEURI",selectedImageuri.getPath()+""+selectedImageuri);
-        String[] projection = { MediaStore.Images.Media.DATA };
-        @SuppressWarnings("deprecation")
-        Cursor cursor = context.managedQuery(contentURI, projection, null,
-                null, null);
-        if (cursor == null)
-            return null;
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        if (cursor.moveToFirst()) {
-            String s = cursor.getString(column_index);
-            // cursor.close();
-            return s;
-        }
-        // cursor.close();
-        return null;
-    }
+
 
     public static String getPathFromUri(final Context context, final Uri uri) {
 

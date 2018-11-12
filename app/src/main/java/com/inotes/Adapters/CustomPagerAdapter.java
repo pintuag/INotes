@@ -62,7 +62,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
             View itemView = mLayoutInflater.inflate(R.layout.previewpager, container, false);
         try {
-            Log.e("Imageurlss",""+image_url.get(position));
+            Log.e("Imageurlss",""+image_url.get(position).getUrls());
             PhotoView img = itemView.findViewById(R.id.img);
             imagePreview=image_url.get(position);
             Glide.with(mContext)

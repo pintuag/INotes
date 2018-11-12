@@ -2,7 +2,7 @@ package com.inotes.Models;
 
 public class NotesName {
 
-    String foldername;
+    public String foldername;
 
     public String getFoldername() {
         return foldername;

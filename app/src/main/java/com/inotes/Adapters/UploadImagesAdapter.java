@@ -23,8 +23,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.inotes.Fragments.ImageViewFragment;
 import com.inotes.Fragments.UploadNotes;
+import com.inotes.Globalfunctions;
 import com.inotes.ImageCompressor;
 import com.inotes.Models.UploadUri;
 import com.inotes.R;
@@ -72,16 +74,17 @@ public class UploadImagesAdapter extends RecyclerView.Adapter<UploadImagesAdapte
                 final String uri = uris.get(position).getUri();
 
                 final Uri parseuri = Uri.parse(uris.get(position).getUri());
+                Glide.with(context).load(parseuri).into(holder.imageView);
                 holder.uri = parseuri;
               //  Log.e("IMAGEURI", "" + holder.uri);
-                if (!parseuri.toString().isEmpty()) {
+               /* if (!parseuri.toString().isEmpty()) {
                     Bitmap bitmap = ImageCompressor.decodeSampledBitmapFromResource(context, parseuri, 300, 300);
                     //bitmap = getCircularBitmap(bitmap);
                     bitmap = Bitmap.createBitmap(bitmap, 0, 0, 250, 250);
 
                     bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
                     holder.imageView.setImageBitmap(bitmap);
-                }
+                }*/
             }
 
             holder.imageView.setOnClickListener(new View.OnClickListener() {
@@ -105,19 +108,6 @@ public class UploadImagesAdapter extends RecyclerView.Adapter<UploadImagesAdapte
         return position;
     }
 
-    public void deletee(int pos) {
-
-        // Log.e("deletesize",""+imagesUriDao.getKey(uris.get(pos)));
-            uris.remove(pos);
-            notifyItemRemoved(pos);
-            // Log.e("urissize",""+uris.size());
-            notifyItemRangeChanged(pos, uris.size());
-        if (uris.size() == 0) {
-            UploadNotes.upload.setVisibility(View.GONE);
-        }
-    }
-
-
     @Override
     public int getItemCount() {
         return uris.size();
@@ -129,14 +119,7 @@ public class UploadImagesAdapter extends RecyclerView.Adapter<UploadImagesAdapte
         int pos;
         Uri uri = null;
         ProgressBar progressBar;
-        TextView finish;
-        EditText letmeedit;
-        TextView letmeshow;
-        ImageButton editdetails, checked;
-        TextView specify;
         RelativeLayout parent_relative;
-        TextView delete;
-        ProgressBar deleteprogress;
 
 
         public RecyclerViewHolder(View itemView) {
@@ -164,6 +147,7 @@ public class UploadImagesAdapter extends RecyclerView.Adapter<UploadImagesAdapte
 
     public void ViewOfImage(int pos) {
 
+        Globalfunctions.setPresViewIndex(2);
         Bundle bundle = new Bundle();
         bundle.putInt("pos", pos);
         final Fragment fragment = new ImageViewFragment();

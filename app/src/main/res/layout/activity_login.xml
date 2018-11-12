@@ -15,8 +15,16 @@
         android:layout_centerVertical="true"
         android:background="#ffffff"
         >
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/jimslogo"
+            android:layout_marginBottom="10dp"/>
 
         <RelativeLayout
+            android:layout_below="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -80,6 +88,7 @@
                             android:paddingTop="15dp"
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
+                            android:paddingBottom="20dp"
                             android:hint="Password">
 
                             <EditText
@@ -140,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sign Up"
                 android:textSize="15sp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:textStyle="bold"
                 android:layout_below="@+id/login"
                 android:padding="10dp"

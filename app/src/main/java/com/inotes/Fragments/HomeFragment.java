@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.home_fragment,container,false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Courses");
 
         manager= new SessionManager();
         usertype = manager.getPrefs(getActivity(),"usertype");
@@ -35,11 +37,11 @@ public class HomeFragment extends Fragment {
 
 
         if(manager.getPrefs(getActivity(),"usertype").equals("1")){
-            String hello="hello teachers";
+            String hello="Hello Teachers";
             textView.setText(hello);
         }
         else if(manager.getPrefs(getActivity(),"usertype").equals("2")){
-            String hello="hello students";
+            String hello="Hello Students";
             textView.setText(hello);
         }
 

@@ -14,7 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.inotes.Adapters.CustomPagerAdapter;
+import com.inotes.Adapters.NotesViewAdapter;
 import com.inotes.Adapters.UploadImagesAdapter;
+import com.inotes.Globalfunctions;
 import com.inotes.Models.ImagePreview;
 import com.inotes.R;
 
@@ -55,11 +57,21 @@ public class ImageViewFragment extends Fragment {
         int pos = getArguments().getInt("pos");
 
         Log.e("Size of ORDER", "kkkk" + UploadImagesAdapter.urls.size());
-        for (int i = 0; i < UploadImagesAdapter.urls.size(); i++) {
-            ImagePreview model = new ImagePreview();
-            Log.e("Size of ORDER", "kkkk" + UploadImagesAdapter.urls.get(i).getUri());
-            model.setUrls(UploadImagesAdapter.urls.get(i).getUri());
-            urls.add(model);
+        if(Globalfunctions.presViewIndex==2) {
+            for (int i = 0; i < UploadImagesAdapter.urls.size(); i++) {
+                ImagePreview model = new ImagePreview();
+                Log.e("Size of ORDER", "kkkk" + UploadImagesAdapter.urls.get(i).getUri());
+                model.setUrls(UploadImagesAdapter.urls.get(i).getUri());
+                urls.add(model);
+            }
+        }
+        if(Globalfunctions.presViewIndex==1){
+            for (int i = 0; i < NotesViewAdapter.newList.size(); i++) {
+                ImagePreview model = new ImagePreview();
+                Log.e("Size of ORDER", "kkkk" + NotesViewAdapter.newList.get(i).getUrl());
+                model.setUrls(NotesViewAdapter.newList.get(i).getUrl());
+                urls.add(model);
+            }
         }
 
 

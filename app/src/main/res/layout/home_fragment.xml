@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:visibility="gone"
             android:layout_centerHorizontal="true"
             android:text="Courses!"
             android:textSize="30sp" />
@@ -34,8 +35,8 @@
             android:layout_height="wrap_content"
             android:text="BCA"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/textview"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/text"
             android:background="@drawable/searchbackborder"/>
 
         <Button
@@ -44,7 +45,7 @@
             android:layout_height="wrap_content"
             android:text="BBA"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_below="@+id/bca"
             android:background="@drawable/searchbackborder"/>
 
