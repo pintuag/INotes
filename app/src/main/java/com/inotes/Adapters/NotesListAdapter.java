@@ -53,12 +53,15 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Recy
     public DatabaseReference databaseReference;
     SessionManager manager;
     ProgressDialog progressDialog;
+    String semester,subject;
 
 
-    public NotesListAdapter(Context context, List<NotesName> notesNames, FragmentManager fragmentManager) {
+    public NotesListAdapter(Context context, List<NotesName> notesNames,String semester,String subject, FragmentManager fragmentManager) {
 
         this.context = context;
         this.notesNames=notesNames;
+        this.semester=semester;
+        this.subject=subject;
         this.fragmentManager=fragmentManager;
         manager = new SessionManager();
     }
@@ -79,6 +82,11 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Recy
         model = notesNames.get(position);
         Log.e("modelvalue","H H"+model.getFoldername());
         holder.foldername.setText(model.getFoldername());
+        if(model.getFoldername().contains("pdf")){
+            holder.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_picture_as_pdf_black_24dp));
+        }else{
+            holder.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_image_black_24dp));
+        }
        // holder.foldername.setText("nammememme");
 
     }
@@ -98,16 +106,20 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Recy
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         TextView foldername;
+        ImageView icon;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
 
             foldername=(TextView)itemView.findViewById(R.id.foldername);
+            icon = (ImageView)itemView.findViewById(R.id.image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
+                    bundle.putString("semester",semester);
+                    bundle.putString("subject", subject);
                     bundle.putString("folder", notesNames.get(getAdapterPosition()).foldername);
                     Fragment fragment = new NotesFragment();
                     fragment.setArguments(bundle);

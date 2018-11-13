@@ -91,6 +91,8 @@ public class UploadNotes extends Fragment {
     List<UploadUri> list = new ArrayList<>();
     List<UploadUri> pdflist = new ArrayList<>();
     ProgressDialog progressDialog;
+    String semester;
+    String subject;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -104,6 +106,11 @@ public class UploadNotes extends Fragment {
         upload = (Button) view.findViewById(R.id.upload);
         pdfname = (TextView)view.findViewById(R.id.pdffilename);
         rv=(RelativeLayout)view.findViewById(R.id.rv);
+
+        semester= getArguments().getString("sem");
+        subject=getArguments().getString("subject");
+
+
 
         //firebase
         storage = FirebaseStorage.getInstance();
@@ -249,11 +256,11 @@ public class UploadNotes extends Fragment {
                 final int pos = i;
                 final String filename = "File -"+System.currentTimeMillis() + "";
                 Log.e("Iskeandraagyame","lll");
-                storageReference.child(course).child(name).child(filename).putFile(uploadUris.get(i).getSelectedUri())
+                storageReference.child(course).child(semester).child(subject).child(name).child(filename).putFile(uploadUris.get(i).getSelectedUri())
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                StorageReference storageReference1 = storageReference.child(course).child(name).child(filename);
+                                StorageReference storageReference1 = storageReference.child(course).child(semester).child(subject).child(name).child(filename);
                                 storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
@@ -264,7 +271,7 @@ public class UploadNotes extends Fragment {
                                       //  Log.e("urllll"," j  "+url+"        ");
 
                                         DatabaseReference reference = database.getReference("Users");
-                                        reference.child("Teacher").child(course).child(name).child(filename).push().setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        reference.child("Teacher").child(course).child(semester).child(subject).child(name).child(filename).push().setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 progressDialog.dismiss();
@@ -275,7 +282,7 @@ public class UploadNotes extends Fragment {
                                                         list.clear();
                                                         uploadUris.clear();
                                                         pdflist.clear();
-                                                        Fragment fragment = new NotesListFragment();
+                                                        Fragment fragment = new SemesterNotes();
                                                         FragmentTransaction fragmentTransaction =getActivity().getSupportFragmentManager().beginTransaction();
                                                         fragmentTransaction.addToBackStack(null);
                                                         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,

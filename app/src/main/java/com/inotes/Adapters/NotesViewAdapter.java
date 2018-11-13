@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -69,6 +70,12 @@ public class NotesViewAdapter extends RecyclerView.Adapter<NotesViewAdapter.Recy
         Log.e("modelvalue","H H"+model.getFoldername());
         holder.foldername.setText(model.getFoldername());
 
+        if(folder.contains("pdf")){
+            holder.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_picture_as_pdf_black_24dp));
+        }else{
+            holder.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_image_black_24dp));
+        }
+
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -118,11 +125,13 @@ public class NotesViewAdapter extends RecyclerView.Adapter<NotesViewAdapter.Recy
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         TextView foldername;
+        ImageView icon;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
 
             foldername = (TextView) itemView.findViewById(R.id.foldername);
+            icon = (ImageView)itemView.findViewById(R.id.image);
 
 
         }

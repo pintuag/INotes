@@ -49,6 +49,16 @@
             android:layout_below="@+id/bca"
             android:background="@drawable/searchbackborder"/>
 
+        <Button
+            android:id="@+id/bjmc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BJMC"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/bba"
+            android:background="@drawable/searchbackborder"/>
+
 
     </RelativeLayout>
 </RelativeLayout>

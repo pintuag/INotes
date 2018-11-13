@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:background="@color/DashGray"
+    android:layout_height="match_parent">
 
     <ProgressBar
         android:id="@+id/progressbar"
@@ -17,6 +18,7 @@
         android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
+        android:padding="5dp"
         android:layout_below="@+id/progressbar"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

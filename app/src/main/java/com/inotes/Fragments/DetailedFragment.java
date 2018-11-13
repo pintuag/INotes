@@ -22,7 +22,7 @@ import com.inotes.SharedPref.SessionManager;
 public class DetailedFragment extends Fragment {
 
 
-    Button syllabus,subjects,uploadnotes;
+    Button syllabus,notes,uploadnotes;
     SessionManager manager;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class DetailedFragment extends Fragment {
 
         manager=new SessionManager();
        syllabus=(Button)view.findViewById(R.id.syllabus);
-       subjects=(Button)view.findViewById(R.id.subjects);
+       notes=(Button)view.findViewById(R.id.subjects);
        uploadnotes=(Button)view.findViewById(R.id.uploadnotes);
 
         if(manager.getPrefs(getActivity(),"usertype").equals("1")){
@@ -56,10 +56,10 @@ public class DetailedFragment extends Fragment {
 
            }
        });
-       subjects.setOnClickListener(new View.OnClickListener() {
+       notes.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Fragment fragment = new NotesListFragment();
+               Fragment fragment = new SemesterNotes();
                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                fragmentTransaction.addToBackStack(null);
                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
@@ -70,7 +70,7 @@ public class DetailedFragment extends Fragment {
         uploadnotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new UploadNotes();
+                Fragment fragment = new SemesterListFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,

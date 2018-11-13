@@ -41,6 +41,7 @@ public class NotesFragment extends Fragment {
     List<NotesName> list = new ArrayList<>();
     List<NotesUrl> urls = new ArrayList<>();
     NotesViewAdapter adapter;
+    String subject,semester;
     ProgressBar progressBar;
     String folder;
 
@@ -50,8 +51,11 @@ public class NotesFragment extends Fragment {
 
         manager=new SessionManager();
         progressBar =(ProgressBar)view.findViewById(R.id.progressbar);
+        semester=getArguments().getString("semester");
+        subject=getArguments().getString("subject");
 
         folder = getArguments().getString("folder");
+        Log.e("FOldervalue",""+folder);
 
         recyclerView2 = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -72,7 +76,7 @@ public class NotesFragment extends Fragment {
 
         try {
             databaseReference = FirebaseDatabase.getInstance().getReference().child("Users")
-                    .child("Teacher").child(course).child(folder);
+                    .child("Teacher").child(course).child(semester).child(subject).child(folder);
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -89,7 +93,7 @@ public class NotesFragment extends Fragment {
                         Log.e("dataaddhogya", " g " + child.getKey());
                         list.add(notesName);
                         databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Users")
-                                .child("Teacher").child(course).child(folder).child(folders);
+                                .child("Teacher").child(course).child(semester).child(subject).child(folder).child(folders);
                         databaseReference2.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/codeview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Code : "
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/colorP"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/code"
+                android:text="eee"
+                android:padding="5dp"
+                android:textColor="@color/grey_600"
+                android:layout_toRightOf="@+id/codeview"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_below="@+id/codeview"
+            android:id="@+id/subjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mathematics"
+            android:padding="5dp"
+            android:textColor="@color/colorP"
+            android:textSize="20sp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -21,7 +21,7 @@ public class HomeFragment extends Fragment {
     TextView textView;
 
     SessionManager manager;
-    Button bca,bba;
+    Button bca,bba,bjmc;
     String usertype;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment {
         textView=(TextView)view.findViewById(R.id.text);
         bca=(Button)view.findViewById(R.id.bca);
         bba=(Button)view.findViewById(R.id.bba);
+        bjmc=(Button)view.findViewById(R.id.bjmc);
 
 
         if(manager.getPrefs(getActivity(),"usertype").equals("1")){
@@ -65,6 +66,21 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
                 manager.setPrefs(getActivity(),"course","bba");
+                Fragment fragment = new DetailedFragment();
+                FragmentTransaction fragmentTransaction =getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment).commit();
+
+
+            }
+        });
+        bjmc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                manager.setPrefs(getActivity(),"course","bjmc");
                 Fragment fragment = new DetailedFragment();
                 FragmentTransaction fragmentTransaction =getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.addToBackStack(null);

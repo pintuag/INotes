@@ -1,6 +1,8 @@
 package com.inotes.Fragments;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -56,12 +58,15 @@ public class Syllabus extends Fragment {
         }else {
             if (manager.getPrefs(getActivity(), "course").equals("bca")) {
 
-                url = "https://firebasestorage.googleapis.com/v0/b/inotes-5cd3d.appspot.com/o/Courses%2FBca%2Fsyllbca191011.pdf?alt=media&token=ca94381f-c2a2-4d21-85e8-bcf4e5349a8b";
+                url = "https://firebasestorage.googleapis.com/v0/b/inotes-98935.appspot.com/o/Courses%2Fsyllbca191011.pdf?alt=media&token=c48101c6-fb34-45e8-98cf-de51fd868db4";
+
             } else if (manager.getPrefs(getActivity(), "course").equals("bba")) {
 
                 Log.e("Bba meaagyake", "mee");
-                url = "https://firebasestorage.googleapis.com/v0/b/inotes-c2295.appspot.com/o/Courses%2FBba%2Fbbagen.pdf?alt=media&token=12778ce9-defa-441d-abb6-67a6bb02c072";
+                url = "https://firebasestorage.googleapis.com/v0/b/inotes-98935.appspot.com/o/Courses%2Fbbagen.pdf?alt=media&token=c62df704-b2b0-4598-980f-6346fd66194d";
+            }else if(manager.getPrefs(getActivity(), "course").equals("bjmc")){
 
+                url="https://firebasestorage.googleapis.com/v0/b/inotes-98935.appspot.com/o/Courses%2Fsyllbjmc200709.pdf?alt=media&token=9d15c8a4-f313-4d1c-b608-5ea5fb6aa66f";
             }
         }
 
@@ -86,7 +91,21 @@ public class Syllabus extends Fragment {
     public class RetrievePDFStream extends AsyncTask<String,Void,InputStream> {
         @Override
         protected InputStream doInBackground(String... strings) {
-            progressBar.setVisibility(View.VISIBLE);
+
+
+            try {
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        progressBar.setVisibility(View.VISIBLE);
+
+                    }
+                });
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             InputStream inputStream=null;
 
             try{
@@ -111,7 +130,15 @@ public class Syllabus extends Fragment {
 
             try {
                 if (inputStream != null) {
-                    progressBar.setVisibility(View.GONE);
+                    getActivity().runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            progressBar.setVisibility(View.GONE);
+
+                        }
+                    });
                     pdfView.fromStream(inputStream).load();
                 }
             }catch (Exception e){

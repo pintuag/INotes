@@ -47,14 +47,17 @@ public class NotesListFragment extends Fragment {
     DatabaseReference databaseReference;
     List<NotesName> list = new ArrayList<>();
     NotesListAdapter adapter;
+    String subject,semester;
     ProgressBar progressBar;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.noteslist,container,false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Notes Folder");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Notes Name");
 
         manager=new SessionManager();
         progressBar =(ProgressBar)view.findViewById(R.id.progressbar);
+        semester=getArguments().getString("semester");
+        subject=getArguments().getString("subject");
 
         recyclerView2 = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -79,7 +82,8 @@ public class NotesListFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         try {
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Teacher").child(course);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users")
+                    .child("Teacher").child(course).child(semester).child(subject);
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -114,7 +118,7 @@ public class NotesListFragment extends Fragment {
     private void setAdapter() {
 
         try {
-            adapter = new NotesListAdapter(getActivity(), list, getActivity().getSupportFragmentManager());
+            adapter = new NotesListAdapter(getActivity(), list,semester,subject, getActivity().getSupportFragmentManager());
             recyclerView2.setAdapter(adapter);
         }catch (Exception e){
             e.printStackTrace();
